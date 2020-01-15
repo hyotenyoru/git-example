@@ -61,11 +61,12 @@ def handle_message(event):
         message = function_list()
         line_bot_api.reply_message(event.reply_token, message)
     elif '1' in msg:
-        message = "測試"
+        message =  TextSendMessage(text='測試')
         line_bot_api.reply_message(event.reply_token, message) 
     else:
+        msg=str(len(msg))
         message = TextSendMessage(text=msg)
-        line_bot_api.reply_message(event.reply_token, str(len(message)))
+        line_bot_api.reply_message(event.reply_token, message)
 
 
 import os
