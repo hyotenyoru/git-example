@@ -60,12 +60,18 @@ def handle_message(event):
     elif '功能列表' in msg:
         message = function_list()
         line_bot_api.reply_message(event.reply_token, message)
+    elif '犽' in msg:
+        message =  TextSendMessage(text='Death like wind always by my side.')
+        line_bot_api.reply_message(event.reply_token, message)
+    elif '星' in msg:
+        message =  TextSendMessage(text='スターバースト・ストリーム')
+        line_bot_api.reply_message(event.reply_token, message)    
     elif '1' in msg:
         message =  TextSendMessage(text='測試')
         line_bot_api.reply_message(event.reply_token, message) 
     else:
         msg=str(len(msg))
-        message = TextSendMessage(text=msg)
+        message = TextSendMessage(text='你輸入'+msg+'幾個字')
         line_bot_api.reply_message(event.reply_token, message)
 
 
