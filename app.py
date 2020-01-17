@@ -13,7 +13,6 @@ from linebot.models import *
 from message import *
 from new import *
 from Function import *
-from weather import *
 #======這裡是呼叫的檔案內容=====
 
 app = Flask(__name__)
@@ -43,7 +42,6 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     
-
     if '最新合作廠商' in msg:
         message = imagemap_message()
         line_bot_api.reply_message(event.reply_token, message)
@@ -65,9 +63,6 @@ def handle_message(event):
     elif '犽' in msg:
         message =  TextSendMessage(text='Death like wind always by my side.')
         line_bot_api.reply_message(event.reply_token, message)
-    elif '天氣' in msg:
-        message =  weather()
-        line_bot_api.reply_message(event.reply_token, message)
     elif '星' in msg:
         message =  TextSendMessage(text='スターバースト・ストリーム')
         line_bot_api.reply_message(event.reply_token, message)    
@@ -84,4 +79,3 @@ import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
-    
