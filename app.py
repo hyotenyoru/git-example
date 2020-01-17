@@ -13,6 +13,7 @@ from linebot.models import *
 from message import *
 from new import *
 from Function import *
+from weather import *
 #======這裡是呼叫的檔案內容=====
 
 app = Flask(__name__)
@@ -24,20 +25,6 @@ handler = WebhookHandler('10839d7e9bc086837c8575a69c71a064')
 
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
-import urllib2
-from sgmllib import SGMLParser
- 
-class WeatherList(SGMLParser):
-    is_li=""
-    name=[]
-    def start_li(self, attrs):
-        self.is_li = 1
-    def end_td(self):
-        self.is_li=""
-    def handle_data(self, text):  
-        if self.is_li:
-                self.name.append(text)  
-
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
@@ -56,13 +43,6 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     
-    content = urllib2.urlopen('https://www.cwb.gov.tw/V8/C/W/Town/Map_66.html').read()
-    Tempreature = WeatherList()
-    Tempreature.feed(content)
-    k=[]
-    for i in Tempreature.name:
-         if '\t' not in i:
-             k[]= i.decode('utf-8')
 
     if '最新合作廠商' in msg:
         message = imagemap_message()
@@ -86,7 +66,7 @@ def handle_message(event):
         message =  TextSendMessage(text='Death like wind always by my side.')
         line_bot_api.reply_message(event.reply_token, message)
     elif '天氣' in msg:
-        message =  TextSendMessage(text=k)
+        message =  weather()
         line_bot_api.reply_message(event.reply_token, message)
     elif '星' in msg:
         message =  TextSendMessage(text='スターバースト・ストリーム')
@@ -104,4 +84,4 @@ import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
-
+    
