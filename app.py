@@ -41,7 +41,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    content = urllib2.urlopen('http://www.cwb.gov.tw/V7/forecast/taiwan/Taipei_City.htm').read()
+    content = urllib2.urlopen('https://www.cwb.gov.tw/V8/C/W/Town/Map_66.html').read()
     Tempreature = WeatherList()
     Tempreature.feed(content)
     k=[]
