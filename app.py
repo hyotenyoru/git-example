@@ -41,7 +41,14 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    
+    content = urllib2.urlopen('http://www.cwb.gov.tw/V7/forecast/taiwan/Taipei_City.htm').read()
+    Tempreature = WeatherList()
+    Tempreature.feed(content)
+    k=[]
+    for i in Tempreature.name:
+         if '\t' not in i:
+             k[]= i.decode('utf-8')
+
     if '最新合作廠商' in msg:
         message = imagemap_message()
         line_bot_api.reply_message(event.reply_token, message)
@@ -63,6 +70,9 @@ def handle_message(event):
     elif '犽' in msg:
         message =  TextSendMessage(text='Death like wind always by my side.')
         line_bot_api.reply_message(event.reply_token, message)
+    elif '天氣' in msg:
+        message =  TextSendMessage(text=k)
+        line_bot_api.reply_message(event.reply_token, message)
     elif '星' in msg:
         message =  TextSendMessage(text='スターバースト・ストリーム')
         line_bot_api.reply_message(event.reply_token, message)    
@@ -79,3 +89,16 @@ import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+import urllib2
+from sgmllib import SGMLParser
+ 
+class WeatherList(SGMLParser):
+    is_li=""
+    name=[]
+    def start_li(self, attrs):
+        self.is_li = 1
+    def end_td(self):
+        self.is_li=""
+    def handle_data(self, text):  
+        if self.is_li:
+                self.name.append(text)  
