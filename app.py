@@ -24,6 +24,20 @@ handler = WebhookHandler('10839d7e9bc086837c8575a69c71a064')
 
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
+import urllib2
+from sgmllib import SGMLParser
+ 
+class WeatherList(SGMLParser):
+    is_li=""
+    name=[]
+    def start_li(self, attrs):
+        self.is_li = 1
+    def end_td(self):
+        self.is_li=""
+    def handle_data(self, text):  
+        if self.is_li:
+                self.name.append(text)  
+
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
@@ -42,6 +56,13 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     
+    content = urllib2.urlopen('https://www.cwb.gov.tw/V8/C/W/Town/Map_66.html').read()
+    Tempreature = WeatherList()
+    Tempreature.feed(content)
+    k=[]
+    for i in Tempreature.name:
+         if '\t' not in i:
+             k[]= i.decode('utf-8')
 
     if '最新合作廠商' in msg:
         message = imagemap_message()
@@ -83,23 +104,4 @@ import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
-import urllib2
-from sgmllib import SGMLParser
- 
-class WeatherList(SGMLParser):
-    is_li=""
-    name=[]
-    def start_li(self, attrs):
-        self.is_li = 1
-    def end_td(self):
-        self.is_li=""
-    def handle_data(self, text):  
-        if self.is_li:
-                self.name.append(text)  
-content = urllib2.urlopen('https://www.cwb.gov.tw/V8/C/W/Town/Map_66.html').read()
-    Tempreature = WeatherList()
-    Tempreature.feed(content)
-    k=[]
-    for i in Tempreature.name:
-         if '\t' not in i:
-             k[]= i.decode('utf-8')
+
