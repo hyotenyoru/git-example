@@ -69,9 +69,12 @@ def handle_message(event):
     elif '1' in msg:
         message =  TextSendMessage(text='測試')
         line_bot_api.reply_message(event.reply_token, message) 
+    elif '理智' in msg:
+        message =  TextSendMessage(text='ㄐㄐ')
+        line_bot_api.reply_message(event.reply_token, message)   
     else:
         msg=str(len(msg))
-        message = TextSendMessage(text='你輸入'+msg+'幾個字')
+        message = TextSendMessage(text='你輸入'+msg+'個字')
         line_bot_api.reply_message(event.reply_token, message)
 
 
