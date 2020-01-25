@@ -27,5 +27,6 @@ def weather():
     for i in Tempreature.name:
          if '\t' not in i:
              k[]= i.decode('utf-8')
+             
     message = TemplateSendMessage(text=k)
     return message
