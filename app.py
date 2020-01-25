@@ -11,7 +11,6 @@ from linebot.models import *
 
 #======這裡是呼叫的檔案內容=====
 from message import *
-from weather import *
 from new import *
 from Function import *
 #======這裡是呼叫的檔案內容=====
@@ -62,7 +61,7 @@ def handle_message(event):
         message = function_list()
         line_bot_api.reply_message(event.reply_token, message)
     elif '天氣' in msg:
-        message = weather()
+         message =  TextSendMessage(text='功能維修中')
         line_bot_api.reply_message(event.reply_token, message)
     elif '犽' in msg:
         message =  TextSendMessage(text='Death like wind always by my side.')
