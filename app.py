@@ -61,7 +61,7 @@ def handle_message(event):
         message = function_list()
         line_bot_api.reply_message(event.reply_token, message)
     elif '天氣' in msg:
-         message =  TextSendMessage(text='功能維修中')
+        message =  TextSendMessage(text='功能維修中')
         line_bot_api.reply_message(event.reply_token, message)
     elif '犽' in msg:
         message =  TextSendMessage(text='Death like wind always by my side.')
