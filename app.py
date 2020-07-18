@@ -12,7 +12,6 @@ from linebot.models import *
 from message import *
 from new import *
 from Function import *
-from D import *
 #======這裡是呼叫的檔案內容=====
 
 app = Flask(__name__)
@@ -78,9 +77,6 @@ def handle_message(event):
     elif '你很爛' in msg:
         message =  TextSendMessage(text='我就爛')
         line_bot_api.reply_message(event.reply_token, message)  
-    elif '巴哈' in msg:
-        a=star()
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=a))
     else: 
         message=ImageSendMessage(original_content_url='https://truth.bahamut.com.tw/s01/201901/66e047c5ee25f1afd236f873ea4fa55e.JPG', preview_image_url='https://truth.bahamut.com.tw/s01/201901/66e047c5ee25f1afd236f873ea4fa55e.JPG')
         line_bot_api.reply_message(event.reply_token,message)
