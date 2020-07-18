@@ -7,7 +7,9 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import *
-
+import requests 
+from bs4 import BeautifulSoup
+from urllib.request import urlretrieve
 
 #======這裡是呼叫的檔案內容=====
 from message import *
@@ -36,7 +38,20 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-
+def movie():
+    target_url = 'https://forum.gamer.com.tw/search.php?bsn=60076&q=%E6%98%9F%E7%88%86#gsc.tab=0&gsc.q=%E6%98%9F%E7%88%86&gsc.page=1'
+    rs = requests.session()
+    res = rs.get(target_url, verify=False)
+    res.encoding = 'utf-8'
+    soup = BeautifulSoup(res.text, 'html.parser')   
+    content = ""
+    for index, data in enumerate(soup.select('div.gs-title gsc-table-cell-thumbnail gsc-thumbnail-left  a')):
+        if index == 20:
+            return content       
+        title = data.text
+        link =  data['href']
+        content += '{}\n{}\n'.format(title, link)
+    return content
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -80,6 +95,9 @@ def handle_message(event):
     elif '你很爛' in msg:
         message =  TextSendMessage(text='我就爛')
         line_bot_api.reply_message(event.reply_token, message)  
+    elif '巴哈' in msg:
+        a=movie()
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=a))
     else: 
         message=ImageSendMessage(original_content_url='https://truth.bahamut.com.tw/s01/201901/66e047c5ee25f1afd236f873ea4fa55e.JPG', preview_image_url='https://truth.bahamut.com.tw/s01/201901/66e047c5ee25f1afd236f873ea4fa55e.JPG')
         line_bot_api.reply_message(event.reply_token,message)
