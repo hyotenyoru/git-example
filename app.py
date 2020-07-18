@@ -39,13 +39,13 @@ def callback():
         abort(400)
     return 'OK'
 def movie():
-    target_url = 'https://forum.gamer.com.tw/search.php?bsn=60076&q=%E6%98%9F%E7%88%86#gsc.tab=0&gsc.q=%E6%98%9F%E7%88%86&gsc.page=1'
+    target_url = 'https://www.google.com/search?q=巴哈星爆星爆'
     rs = requests.session()
     res = rs.get(target_url, verify=False)
     res.encoding = 'utf-8'
     soup = BeautifulSoup(res.text, 'html.parser')   
     content = ""
-    for index, data in enumerate(soup.select('div.gs-title gsc-table-cell-thumbnail gsc-thumbnail-left  a')):
+    for index, data in enumerate(soup.select('div.r h3 a')):
         if index == 20:
             return content       
         title = data.text
