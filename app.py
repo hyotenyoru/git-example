@@ -81,8 +81,9 @@ def handle_message(event):
         message =  TextSendMessage(text='我就爛')
         line_bot_api.reply_message(event.reply_token, message)    
     else:
-        msg=str(len(msg))
-        message = TextSendMessage(text='你輸入'+msg+'個字')
+        message = TextSendMessage(image=
+    'originalContentUrl": "http://s.nownews.com/b9/a2/b9a2f68efc4be7905e67fdc9c55ef2e6.jpg',
+    'previewImageUrl": "https://33.media.tumblr.com/tumblr_ma97m64In61rfpxhzo6_400.gif')
         line_bot_api.reply_message(event.reply_token, message)
 
 
