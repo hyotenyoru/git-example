@@ -24,20 +24,6 @@ line_bot_api = LineBotApi('Snr5bl0ZKPFCxvzqrFnga9tSCDzTlulc24bXm1v3Lwhy591RZJ6js
 # Channel Secret
 handler = WebhookHandler('10839d7e9bc086837c8575a69c71a064')
 
-# 監聽所有來自 /callback 的 Post Request
-@app.route("/callback", methods=['POST'])
-def callback():
-    # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
-    # get request body as text
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
-    # handle webhook body
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        abort(400)
-    return 'OK'
 def movie():
     target_url = 'https://www.google.com/search?q=巴哈星爆星爆'
     rs = requests.session()
@@ -52,6 +38,20 @@ def movie():
         link =  data['href']
         content += '{}\n{}\n'.format(title, link)
     return content
+# 監聽所有來自 /callback 的 Post Request
+@app.route("/callback", methods=['POST'])
+def callback():
+    # get X-Line-Signature header value
+    signature = request.headers['X-Line-Signature']
+    # get request body as text
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
+    # handle webhook body
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        abort(400)
+    return 'OK'
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
