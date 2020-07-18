@@ -1,5 +1,4 @@
 from flask import Flask, request, abort
-
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -7,6 +6,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import *
+import json
 
 #======這裡是呼叫的檔案內容=====
 from message import *
@@ -37,7 +37,14 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    with open("data.json",mode="r",encoding="utf-8") as file:
+    data = json.load(file)
     msg = event.message.text
+    for x in data:
+    if x['id'] in msg:
+        message =  TextSendMessage(text=x['name'])
+        line_bot_api.reply_message(event.reply_token, message)
+
     if '最新合作廠商' in msg:
         message = imagemap_message()
         line_bot_api.reply_message(event.reply_token, message)
