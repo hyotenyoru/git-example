@@ -80,10 +80,8 @@ def handle_message(event):
     elif '你很爛' in msg:
         message =  TextSendMessage(text='我就爛')
         line_bot_api.reply_message(event.reply_token, message)    
-    else:
-        message = ImageSendMessage(original_content_url='http://s.nownews.com/b9/a2/b9a2f68efc4be7905e67fdc9c55ef2e6.jpg',preview_image_url='https://33.media.tumblr.com/tumblr_ma97m64In61rfpxhzo6_400.gif')
-        line_bot_api.reply_message(event.reply_token, message)
-
+    else: 
+        line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url='http://s.nownews.com/b9/a2/b9a2f68efc4be7905e67fdc9c55ef2e6.jpg', preview_image_url='https://33.media.tumblr.com/tumblr_ma97m64In61rfpxhzo6_400.gif'))
 
 import os
 if __name__ == "__main__":
