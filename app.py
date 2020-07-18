@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import *
-import requests 
+
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
 
@@ -23,15 +23,15 @@ app = Flask(__name__)
 line_bot_api = LineBotApi('Snr5bl0ZKPFCxvzqrFnga9tSCDzTlulc24bXm1v3Lwhy591RZJ6jsEM2n1FyL+X3/RwH49XfaG8P4uoG/WjcEs+dRAx01OjnDrwOJCSbQMB6a2OkjWP3GIL12E8oTHP35HxeRJfUEI0kgYU8Xsxp3wdB04t89/1O/w1cDnyilFU=')
 # Channel Secret
 handler = WebhookHandler('10839d7e9bc086837c8575a69c71a064')
-
-def movie():
-    target_url = 'https://www.google.com/search?q=巴哈星爆星爆'
+import requests 
+def star():
+    target_url = 'https://forum.gamer.com.tw/search.php?bsn=60076&q=星爆'
     rs = requests.session()
     res = rs.get(target_url, verify=False)
     res.encoding = 'utf-8'
     soup = BeautifulSoup(res.text, 'html.parser')   
     content = ""
-    for index, data in enumerate(soup.select('div.r h3 a')):
+    for index, data in enumerate(soup.select('div.gsc-table-cell-snippet-close div a')):
         if index == 20:
             return content       
         title = data.text
@@ -96,7 +96,7 @@ def handle_message(event):
         message =  TextSendMessage(text='我就爛')
         line_bot_api.reply_message(event.reply_token, message)  
     elif '巴哈' in msg:
-        a=movie()
+        a=star()
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=a))
     else: 
         message=ImageSendMessage(original_content_url='https://truth.bahamut.com.tw/s01/201901/66e047c5ee25f1afd236f873ea4fa55e.JPG', preview_image_url='https://truth.bahamut.com.tw/s01/201901/66e047c5ee25f1afd236f873ea4fa55e.JPG')
