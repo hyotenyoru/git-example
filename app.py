@@ -77,7 +77,10 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, message) 
     elif '女' in msg:
         message =  TextSendMessage(text='可憐')
-        line_bot_api.reply_message(event.reply_token, message)      
+        line_bot_api.reply_message(event.reply_token, message)  
+    elif '你很爛' in msg:
+        message =  TextSendMessage(text='我就爛')
+        line_bot_api.reply_message(event.reply_token, message)    
     else:
         msg=str(len(msg))
         message = TextSendMessage(text='你輸入'+msg+'個字')
