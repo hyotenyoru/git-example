@@ -7,7 +7,7 @@ from linebot.models import *
 #ImagemapSendMessage(組圖訊息)
 def imagemap_message():
     message = ImagemapSendMessage(
-        base_url="image/SAO.jpg",
+        base_url="https://drive.google.com/file/d/17r04smoB-Q0e5b0XL-7M0L2VUBLQki-R/view?usp=sharing",
         alt_text='刀劍神域',
         base_size=BaseSize(height=4000, width=2000),
         actions=[
